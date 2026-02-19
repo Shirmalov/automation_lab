@@ -1,23 +1,24 @@
 import time
 import pytest
 import allure
+from pages.login_page import LoginPage
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from pages.login_page import LoginPage
-
 
 @pytest.fixture(scope="function")
 def driver():
     """Фикстура для инициализации и завершения работы браузера."""
     options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
     options.add_argument("--start-maximized")
     options.add_argument("--disable-blink-features=AutomationControlled")
 
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
     driver.implicitly_wait(10)
-
     yield driver
 
     driver.quit()
@@ -26,8 +27,7 @@ def driver():
 @allure.epic("Тестирование Swag Labs")
 @allure.feature("Авторизация")
 @allure.story("Успешная авторизация")
-@allure.title("TITLE-SW0001: Успешная авторизация на сайте Swag Labs")
-@allure.testcase("https://btask.beeline.ru/secure/Tests.jspa#/testCase/SW0001", name="SW0001")
+@allure.title("TITLE-SW0001: Успешная авторизация на сайте Orange HRM")
 @pytest.mark.smoke
 @pytest.mark.regress
 def test_login_success(driver):
@@ -37,7 +37,7 @@ def test_login_success(driver):
     login_page = LoginPage(driver)
 
     # Act
-    login_page.open().login("standard_user", "secret_sauce")
+    login_page.open().login("Admin", "admin123")
 
     # Assert
     login_page.verify_login_success()

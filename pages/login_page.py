@@ -1,59 +1,37 @@
 import allure
 from selenium.webdriver.common.by import By
 from core.common.base_page import BasePage
+from core.common.links import Links
+from selenium.webdriver.support import expected_conditions as EC
+
 
 
 class LoginPage(BasePage):
-    """Страница авторизации Saucedemo."""
+    """Страница авторизации Orange HRM."""
 
-    URL = "https://www.saucedemo.com"
+    URL = Links.LOGIN_URL
 
-    # Локаторы
-    USERNAME_FIELD = (By.ID, "user-name")
-    PASSWORD_FIELD = (By.ID, "password")
-    LOGIN_BUTTON = (By.ID, "login-button")
-    ERROR_MESSAGE = (By.CSS_SELECTOR, "h3[data-test='error']")
-    INVENTORY_TITLE = (By.CSS_SELECTOR, ".title")
+    USERNAME_FIELD = ('css_selector', 'input[name="username"]')
+    PASSWORD_FIELD = ('css_selector', 'input[name="password"]')
+    LOGIN_BUTTON = ('css_selector', 'button[type="submit"]')
 
     def __init__(self, driver, url: str = URL):
         super().__init__(driver, url)
 
-    @allure.step("Открыть страницу логина")
+    @allure.step('Открыть страницу логина')
     def open(self) -> "LoginPage":
         super().open()
         return self
 
-    @allure.step("Ввести логин")
-    def fill_username(self, username: str) -> "LoginPage":
-        self.fill_field(*self.USERNAME_FIELD, username)
-        return self
+    @allure.step('Ввести логин')
+    def fill_login_field(self, login):
+        self.wait.until(EC.element_to_be_clickable(self.USERNAME_FIELD)).send_keys(login)
 
-    @allure.step("Ввести пароль")
-    def fill_password(self, password: str) -> "LoginPage":
-        self.fill_field(*self.PASSWORD_FIELD, password)
-        return self
+    @allure.step('Ввести пароль')
+    def fill_password(self, password):
+        self.wait.until(EC.element_to_be_clickable(self.PASSWORD_FIELD)).send_keys(password()
 
-    @allure.step("Нажать кнопку входа")
-    def click_login(self) -> "LoginPage":
-        self.click(*self.LOGIN_BUTTON)
-        return self
 
-    @allure.step("Выполнить авторизацию")
-    def login(self, username: str, password: str) -> "LoginPage":
-        """Полный сценарий входа."""
-        return (self
-                .fill_username(username)
-                .fill_password(password)
-                .click_login())
-
-    @allure.step("Проверить успешный вход")
-    def verify_login_success(self) -> "LoginPage":
-        """Проверяет, что пользователь успешно авторизован."""
-        self.wait_for_url_contains("inventory.html")
-        assert self.get_text(*self.INVENTORY_TITLE) == "Products"
-        return self
-
-    @allure.step("Получить текст ошибки")
-    def get_error_message(self) -> str:
-        """Возвращает текст сообщения об ошибке."""
-        return self.get_text(*self.ERROR_MESSAGE)
+    @allure.step('Нажать кнопку "Login"')
+    def click_on_login_button(self):
+        self.wait.until(EC.element_to_be_clickable(self.LOGIN_BUTTON)).click()
