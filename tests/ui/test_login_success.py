@@ -1,19 +1,20 @@
 import time
 import allure
 import pytest
-from base.base_test import BaseTest
+from config.data import Data
+from pages.login_page import LoginPage
 
 
-@allure.feature("Profile Functionality")
-class TestProfileFeature(BaseTest):
-
-    @allure.title("Change profile name")
-    @allure.severity("Critical")
-    @pytest.mark.smoke
-    def test_change_profile_name(self):
-        self.login_page.open()
-        self.login_page.enter_login(self.data.LOGIN)
-        self.login_page.enter_password(self.data.PASSWORD)
-        self.login_page.click_submit_button()
-
-        time.sleep(5)
+@pytest.mark.smoke
+@pytest.mark.regress
+@allure.epic("Тестирование Orange HRM")
+@allure.feature("Авторизация")
+@allure.story("Успешная авторизация")
+@allure.title("AT-HRM0001: Успешная авторизация на сайте Orange HRM")
+def test_login_success(driver):
+    login_page = LoginPage(driver)
+    login_page.open()
+    login_page.fill_username_field(Data.LOGIN)
+    login_page.fill_password_field(Data.PASSWORD)
+    login_page.click_on_login_button()
+    time.sleep(5)
