@@ -9,6 +9,10 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 10, poll_frequency=1)
+        self.admin_section = ('xpath', '//span[.="Admin"]')
+        self.pim_section = ('xpath', '//span[.="PIM"]')
+        self.leave_section = ('xpath', '//span[.="Leave"]')
+
 
     def open(self):
         with allure.step(f'Open {self.page_url} page'):
@@ -24,3 +28,15 @@ class BasePage:
             name=screenshot_name,
             attachment_type=AttachmentType.PNG
         )
+
+    @allure.step('Открыть раздел "Admin"')
+    def click_on_admin_section_lnk(self):
+        self.wait.until(EC.element_to_be_clickable(self.admin_section)).click()
+
+    @allure.step('Открыть раздел "PIM"')
+    def click_on_pim_section_lnk(self):
+        self.wait.until(EC.element_to_be_clickable(self.pim_section)).click()
+
+    @allure.step('Открыть раздел "Leave"')
+    def click_on_leave_section_lnk(self):
+        self.wait.until(EC.element_to_be_clickable(self.leave_section)).click()
