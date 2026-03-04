@@ -12,7 +12,7 @@ class BasePage:
         self.admin_section = ('xpath', '//span[.="Admin"]')
         self.pim_section = ('xpath', '//span[.="PIM"]')
         self.leave_section = ('xpath', '//span[.="Leave"]')
-
+        self.time_section = ('xpath', '//span[.="Time"]')
 
     def open(self):
         with allure.step(f'Open {self.page_url} page'):
@@ -40,3 +40,7 @@ class BasePage:
     @allure.step('Открыть раздел "Leave"')
     def click_on_leave_section_lnk(self):
         self.wait.until(EC.element_to_be_clickable(self.leave_section)).click()
+
+    @allure.step('Открыть раздел "Time"')
+    def click_on_time_section_lnk(self):
+        self.wait.until(EC.element_to_be_clickable(self.time_section)).click()
