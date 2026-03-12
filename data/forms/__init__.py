@@ -1,1 +1,1 @@
-from select_country import SelectCountry
+from .select_country import SelectCountry
