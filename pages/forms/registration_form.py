@@ -18,6 +18,7 @@ class RegistrationFormPage(BasePage):
         self.country_ddl = ('xpath', '//select[@id="country"]')
         self.terms_of_use_chb = ('xpath', '//input[@id="terms"]')
         self.register_btn = ('xpath', '//button[@id="submitBtn"]')
+        self.success_message = ('xpath', '//p[normalize-space()="Форма успешно отправлена!"]')
 
     @allure.step('Открыть раздел "Формы и Inputs"')
     def click_on_forms_section_lnk(self):
@@ -48,3 +49,9 @@ class RegistrationFormPage(BasePage):
     @allure.step('Нажать на кнопку "Register"')
     def click_on_register_button(self):
         self.wait.until(EC.element_to_be_clickable(self.register_btn)).click()
+
+    @allure.step('Проверить сообщение об успешной отправке формы')
+    def success_message_check(self):
+        message = self.wait.until(EC.visibility_of_element_located(self.success_message))
+        assert message.text.strip() == "Форма успешно отправлена!", \
+            f"Ожидалось 'Форма успешно отправлена!', но получено: '{message.text.strip()}'"
