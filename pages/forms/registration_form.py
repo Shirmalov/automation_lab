@@ -10,7 +10,6 @@ from selenium.webdriver.support import expected_conditions as EC
 class RegistrationFormPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
-        self.page_url = Links.WEB_PAGE
         self.forms_section = ('xpath', '//div[.="Формы"]')
         self.username_fld = ('xpath', '//input[@id="username"]')
         self.email_fld = ('xpath', '//input[@id="email"]')

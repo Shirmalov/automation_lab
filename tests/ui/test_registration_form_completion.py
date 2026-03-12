@@ -16,7 +16,6 @@ from pages.forms.registration_form import RegistrationFormPage
 def test_registration_form_completion(driver):
     username = data_helper.generate_username()
     email = data_helper.generate_email()
-
     registration_page = RegistrationFormPage(driver)
     registration_page.open()
     registration_page.click_on_forms_section_lnk()

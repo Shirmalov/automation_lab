@@ -3,10 +3,13 @@ from allure_commons.types import AttachmentType
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from config.links import Links
+
 
 class BasePage:
 
     def __init__(self, driver):
+        self.page_url = Links.WEB_PAGE
         self.driver = driver
         self.wait = WebDriverWait(driver, 10, poll_frequency=1)
         self.forms_section = ('xpath', '//div[.="Формы"]')
@@ -28,19 +31,3 @@ class BasePage:
             name=screenshot_name,
             attachment_type=AttachmentType.PNG
         )
-
-    @allure.step('Открыть раздел "Формы и Inputs"')
-    def click_on_forms_section_lnk(self):
-        self.wait.until(EC.element_to_be_clickable(self.forms_section)).click()
-
-    @allure.step('Открыть раздел "Таблицы"')
-    def click_on_tables_section_lnk(self):
-        self.wait.until(EC.element_to_be_clickable(self.tables_section)).click()
-
-    @allure.step('Открыть раздел "Модальные окна"')
-    def click_on_modals_section_lnk(self):
-        self.wait.until(EC.element_to_be_clickable(self.modals_section)).click()
-
-    @allure.step('Открыть раздел "Drag & Drop"')
-    def click_on_drag_drop_section_lnk(self):
-        self.wait.until(EC.element_to_be_clickable(self.drag_drop_section)).click()
