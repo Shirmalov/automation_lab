@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
-        self.page_url = Links.LOGIN_PAGE
+        self.page_url = Links.WEB_PAGE
         self.username_fld = ('xpath', '//input[@name="username"]')
         self.password_fld = ('xpath', '//input[@name="password"]')
         self.login_btn = ('xpath', '//button[@type="submit"]')
