@@ -547,5 +547,101 @@ class DataHelper(BaseRandomizer):
             total_amount=total_amount,
         )
 
+    @staticmethod
+    def generate_username(length: int = 10) -> str:
+        """
+        Генерирует случайный username (буквы + цифры).
+        Максимальная длина — 15 символов.
+
+        Args:
+            length: Длина username (по умолчанию 10, макс. 15)
+
+        Returns:
+            str: Сгенерированный username
+
+        >>> DataHelper.generate_username(8)
+        'user_a3k9'  # пример
+        """
+        length = min(length, 15)  # ограничиваем макс. длину
+        prefix = 'user_'
+        random_part = ''.join(random.choices(string.ascii_lowercase + string.digits, k=length - len(prefix)))
+        return f'{prefix}{random_part}'
+
+    @staticmethod
+    def generate_email(domain: str = 'testmail.com', prefix: str = None) -> str:
+        """
+        Генерирует валидный email для тестов.
+
+        Args:
+            domain: Домен почтового ящика (по умолчанию 'testmail.com')
+            prefix: Префикс email (по умолчанию генерируется случайно)
+
+        Returns:
+            str: Сгенерированный email
+
+        >>> DataHelper.generate_email()
+        'test_a3k9@ytestmail.com'  # пример
+        >>> DataHelper.generate_email(domain='example.org')
+        'test_b7x2@example.org'  # пример
+        """
+        if prefix is None:
+            prefix = f"test_{''.join(random.choices(string.ascii_lowercase + string.digits, k=4))}"
+        return f'{prefix}@{domain}'
+
+    @staticmethod
+    def generate_password(length: int = 12,
+                          use_special: bool = True,
+                          max_length: int = 20) -> str:
+        """
+        Генерирует случайный пароль с буквами, цифрами и спецсимволами.
+
+        Args:
+            length: Длина пароля (по умолчанию 12)
+            use_special: Использовать ли спецсимволы (!@#$%)
+            max_length: Максимальная длина пароля (по умолчанию 20)
+
+        Returns:
+            str: Сгенерированный пароль
+
+        >>> DataHelper.generate_password(10)
+        'aB3$kL9@mN2'  # пример
+        >>> DataHelper.generate_password(8, use_special=False)
+        'aB3kL9mN'  # пример
+        """
+        length = min(length, max_length)  # ограничиваем макс. длину
+
+        # Обязательные символы для надежности
+        chars = [
+            random.choice(string.ascii_lowercase),
+            random.choice(string.ascii_uppercase),
+            random.choice(string.digits)
+        ]
+
+        # Набор символов для заполнения
+        all_chars = string.ascii_letters + string.digits
+        if use_special:
+            chars.append(random.choice('!@#$%'))
+            all_chars += '!@#$%'
+
+        # Заполняем остаток длины случайными символами
+        chars += random.choices(all_chars, k=length - len(chars))
+
+        # Перемешиваем и возвращаем
+        random.shuffle(chars)
+        return ''.join(chars)
+
+    @staticmethod
+    def generate_unique_prefix() -> str:
+        """
+        Генерирует уникальный префикс на основе timestamp.
+        Полезно для предотвращения конфликтов данных в тестах.
+
+        Returns:
+            str: Уникальный префикс
+
+        >>> DataHelper.generate_unique_prefix()
+        '20250115_143022'  # пример
+        """
+        return datetime.now().strftime('%Y%m%d_%H%M%S')
 
 data_helper = DataHelper()
