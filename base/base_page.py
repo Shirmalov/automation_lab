@@ -9,10 +9,10 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 10, poll_frequency=1)
-        self.admin_section = ('xpath', '//span[.="Admin"]')
-        self.pim_section = ('xpath', '//span[.="PIM"]')
-        self.leave_section = ('xpath', '//span[.="Leave"]')
-        self.time_section = ('xpath', '//span[.="Time"]')
+        self.forms_section = ('xpath', '//div[.="Формы"]')
+        self.tables_section = ('xpath', '//div[.="Таблицы"]')
+        self.modals_section = ('xpath', '//div[.="Модальные окна"]')
+        self.drag_drop_section = ('xpath', '//div[.="Drag & Drop"]')
 
     def open(self):
         with allure.step(f'Open {self.page_url} page'):
@@ -29,18 +29,18 @@ class BasePage:
             attachment_type=AttachmentType.PNG
         )
 
-    @allure.step('Открыть раздел "Admin"')
-    def click_on_admin_section_lnk(self):
-        self.wait.until(EC.element_to_be_clickable(self.admin_section)).click()
+    @allure.step('Открыть раздел "Формы и Inputs"')
+    def click_on_forms_section_lnk(self):
+        self.wait.until(EC.element_to_be_clickable(self.forms_section)).click()
 
-    @allure.step('Открыть раздел "PIM"')
-    def click_on_pim_section_lnk(self):
-        self.wait.until(EC.element_to_be_clickable(self.pim_section)).click()
+    @allure.step('Открыть раздел "Таблицы"')
+    def click_on_tables_section_lnk(self):
+        self.wait.until(EC.element_to_be_clickable(self.tables_section)).click()
 
-    @allure.step('Открыть раздел "Leave"')
-    def click_on_leave_section_lnk(self):
-        self.wait.until(EC.element_to_be_clickable(self.leave_section)).click()
+    @allure.step('Открыть раздел "Модальные окна"')
+    def click_on_modals_section_lnk(self):
+        self.wait.until(EC.element_to_be_clickable(self.modals_section)).click()
 
-    @allure.step('Открыть раздел "Time"')
-    def click_on_time_section_lnk(self):
-        self.wait.until(EC.element_to_be_clickable(self.time_section)).click()
+    @allure.step('Открыть раздел "Drag & Drop"')
+    def click_on_drag_drop_section_lnk(self):
+        self.wait.until(EC.element_to_be_clickable(self.drag_drop_section)).click()
