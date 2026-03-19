@@ -644,4 +644,5 @@ class DataHelper(BaseRandomizer):
         """
         return datetime.now().strftime('%Y%m%d_%H%M%S')
 
+
 data_helper = DataHelper()

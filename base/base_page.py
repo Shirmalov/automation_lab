@@ -2,6 +2,7 @@ import allure
 from allure_commons.types import AttachmentType
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 from config.links import Links
 
@@ -12,10 +13,6 @@ class BasePage:
         self.page_url = Links.WEB_PAGE
         self.driver = driver
         self.wait = WebDriverWait(driver, 10, poll_frequency=1)
-        self.forms_section = ('xpath', '//div[.="Формы"]')
-        self.tables_section = ('xpath', '//div[.="Таблицы"]')
-        self.modals_section = ('xpath', '//div[.="Модальные окна"]')
-        self.drag_drop_section = ('xpath', '//div[.="Drag & Drop"]')
 
     def open(self):
         with allure.step(f'Open {self.page_url} page'):
@@ -31,3 +28,9 @@ class BasePage:
             name=screenshot_name,
             attachment_type=AttachmentType.PNG
         )
+
+    def get_error_text(self, locator: tuple[str, str]) -> str | None:
+        try:
+            return self.wait.until(EC.visibility_of_element_located(locator)).text.strip()
+        except TimeoutException:
+            return None

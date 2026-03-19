@@ -1,6 +1,5 @@
 import allure
 
-from config.links import Links
 from base.base_page import BasePage
 from data.forms.select_country import SelectCountry
 from selenium.webdriver.support.ui import Select as SeleniumSelect
@@ -11,6 +10,7 @@ class RegistrationFormPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self.forms_section = ('xpath', '//div[.="Формы"]')
+        self.form_name = ('xpath', '//h3[.="1. Простая форма регистрации"]')
         self.username_fld = ('xpath', '//input[@id="username"]')
         self.email_fld = ('xpath', '//input[@id="email"]')
         self.password_fld = ('xpath', '//input[@id="password"]')
@@ -22,6 +22,12 @@ class RegistrationFormPage(BasePage):
     @allure.step('Открыть раздел "Формы и Inputs"')
     def click_on_forms_section_lnk(self):
         self.wait.until(EC.element_to_be_clickable(self.forms_section)).click()
+
+    @allure.step('Проверить название формы')
+    def form_name_check(self):
+        message = self.wait.until(EC.visibility_of_element_located(self.form_name))
+        assert message.text.strip() == '1. Простая форма регистрации', \
+            f'Ожидалось "1. Простая форма регистрации", но получено: "{message.text.strip()}"'
 
     @allure.step('Указать значение в поле "Username"')
     def fill_username_field(self, value: str):
@@ -52,5 +58,5 @@ class RegistrationFormPage(BasePage):
     @allure.step('Проверить сообщение об успешной отправке формы')
     def success_message_check(self):
         message = self.wait.until(EC.visibility_of_element_located(self.success_message))
-        assert message.text.strip() == "Форма успешно отправлена!", \
-            f"Ожидалось 'Форма успешно отправлена!', но получено: '{message.text.strip()}'"
+        assert message.text.strip() == 'Форма успешно отправлена!', \
+            f'Ожидалось "Форма успешно отправлена!", но получено: "{message.text.strip()}"'
