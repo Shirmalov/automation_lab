@@ -19,6 +19,7 @@ def test_registration_form_completion(driver):
     registration_page = RegistrationFormPage(driver)
     registration_page.open()
     registration_page.click_on_forms_section_lnk()
+    registration_page.form_name_check()
     registration_page.fill_username_field(username)
     registration_page.fill_email_field(email)
     registration_page.fill_password_field(Data.PASSWORD)
