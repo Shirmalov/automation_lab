@@ -1,6 +1,5 @@
 import allure
 
-from config.links import Links
 from base.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -21,6 +20,11 @@ class RegistrationFormWithValidationPage(BasePage):
     def click_on_forms_section_lnk(self):
         self.wait.until(EC.element_to_be_clickable(self.forms_section)).click()
 
+    @allure.step('Скроллить до заголовка формы')
+    def scroll_to_form_name(self):
+        element = self.wait.until(EC.presence_of_element_located(self.form_name))
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+
     @allure.step('Проверить название формы')
     def form_name_check(self):
         message = self.wait.until(EC.visibility_of_element_located(self.form_name))
@@ -28,7 +32,7 @@ class RegistrationFormWithValidationPage(BasePage):
             f'Ожидалось "2. Форма с валидацией", но получено: "{message.text.strip()}"'
 
     @allure.step('Указать значение в поле "Username"')
-    def fill_uval_username_field(self, value: str):
+    def fill_val_username_field(self, value: str):
         self.wait.until(EC.element_to_be_clickable(self.val_username_fld)).send_keys(value)
 
     @allure.step('Указать значение в поле "Email"')

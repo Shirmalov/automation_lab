@@ -1,6 +1,5 @@
 import allure
 
-from config.links import Links
 from base.base_page import BasePage
 from data.forms.select_country import SelectCountry
 from selenium.webdriver.support.ui import Select as SeleniumSelect
