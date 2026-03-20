@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import Select as SeleniumSelect
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class RegistrationFormPage(BasePage):
+class SimpleRegistrationFormPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self.form_name = ('xpath', '//h3[.="1. Простая форма регистрации"]')
@@ -19,7 +19,7 @@ class RegistrationFormPage(BasePage):
         self.success_message = ('xpath', '//p[normalize-space()="Форма успешно отправлена!"]')
 
     @allure.step('Проверить название формы')
-    def form_name_check(self):
+    def check_name_form(self):
         message = self.wait.until(EC.visibility_of_element_located(self.form_name))
         assert message.text.strip() == '1. Простая форма регистрации', \
             f'Ожидалось "1. Простая форма регистрации", но получено: "{message.text.strip()}"'
@@ -51,7 +51,7 @@ class RegistrationFormPage(BasePage):
         self.wait.until(EC.element_to_be_clickable(self.register_btn)).click()
 
     @allure.step('Проверить сообщение об успешной отправке формы')
-    def success_message_check(self):
+    def check_success_message(self):
         message = self.wait.until(EC.visibility_of_element_located(self.success_message))
         assert message.text.strip() == 'Форма успешно отправлена!', \
             f'Ожидалось "Форма успешно отправлена!", но получено: "{message.text.strip()}"'
