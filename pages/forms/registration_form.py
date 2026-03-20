@@ -9,7 +9,6 @@ from selenium.webdriver.support import expected_conditions as EC
 class RegistrationFormPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
-        self.forms_section = ('xpath', '//div[.="Формы"]')
         self.form_name = ('xpath', '//h3[.="1. Простая форма регистрации"]')
         self.username_fld = ('xpath', '//input[@id="username"]')
         self.email_fld = ('xpath', '//input[@id="email"]')
@@ -18,10 +17,6 @@ class RegistrationFormPage(BasePage):
         self.terms_of_use_chb = ('xpath', '//input[@id="terms"]')
         self.register_btn = ('xpath', '//button[@id="submitBtn"]')
         self.success_message = ('xpath', '//p[normalize-space()="Форма успешно отправлена!"]')
-
-    @allure.step('Открыть раздел "Формы и Inputs"')
-    def click_on_forms_section_lnk(self):
-        self.wait.until(EC.element_to_be_clickable(self.forms_section)).click()
 
     @allure.step('Проверить название формы')
     def form_name_check(self):

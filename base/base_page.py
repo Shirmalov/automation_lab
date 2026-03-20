@@ -13,6 +13,8 @@ class BasePage:
         self.page_url = Links.WEB_PAGE
         self.driver = driver
         self.wait = WebDriverWait(driver, 10, poll_frequency=1)
+        self.forms_section = ('xpath', '//div[.="Формы"]')
+        self.name_form_section = ('xpath', '//h2[.="Формы и Inputs"]')
 
     def open(self):
         with allure.step(f'Open {self.page_url} page'):
@@ -34,3 +36,13 @@ class BasePage:
             return self.wait.until(EC.visibility_of_element_located(locator)).text.strip()
         except TimeoutException:
             return None
+
+    @allure.step('Открыть раздел "Формы и Inputs"')
+    def click_on_forms_section_lnk(self):
+        self.wait.until(EC.element_to_be_clickable(self.forms_section)).click()
+
+    @allure.step('Проверить название раздела "Формы"')
+    def check_name_form_section(self):
+        message = self.wait.until(EC.visibility_of_element_located(self.name_form_section))
+        assert message.text.strip() == 'Формы и Inputs', \
+            f'Ожидалось "Формы и Inputs", но получено: "{message.text.strip()}"'

@@ -4,10 +4,9 @@ from base.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class RegistrationValidationPage(BasePage):
+class RegistrationDynamicPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
-        self.forms_section = ('xpath', '//div[.="Формы"]')
         self.form_name = ('xpath', '//h3[.="2. Форма с валидацией"]')
         self.val_username_fld = ('xpath', '//input[@id="val-username"]')
         self.username_error = ('xpath', '//p[.="Username должен содержать минимум 5 символов"]')
@@ -21,10 +20,6 @@ class RegistrationValidationPage(BasePage):
         self.success_message = ('xpath', '//p[normalize-space()="Все проверки пройдены! Форма валидна."]')
         self.failure_message = ('xpath',
                                 '//p[normalize-space()="Форма содержит ошибки. Исправьте их и попробуйте снова."]')
-
-    @allure.step('Открыть раздел "Формы и Inputs"')
-    def click_on_forms_section_lnk(self):
-        self.wait.until(EC.element_to_be_clickable(self.forms_section)).click()
 
     @allure.step('Скроллить до заголовка формы')
     def scroll_to_form_name(self):

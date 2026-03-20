@@ -3,7 +3,7 @@ import allure
 import pytest
 from config.data import Data
 from data.data_helper import data_helper
-from pages.forms.registration_form_with_validation import RegistrationValidationPage
+from pages.forms.registration_validation_form import RegistrationValidationPage
 
 
 @pytest.mark.smoke

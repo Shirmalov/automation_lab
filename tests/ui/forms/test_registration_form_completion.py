@@ -19,6 +19,7 @@ def test_registration_form_completion(driver):
     registration_page = RegistrationFormPage(driver)
     registration_page.open()
     registration_page.click_on_forms_section_lnk()
+    registration_page.check_name_form_section()
     registration_page.form_name_check()
     registration_page.fill_username_field(username)
     registration_page.fill_email_field(email)
@@ -27,4 +28,3 @@ def test_registration_form_completion(driver):
     registration_page.click_on_terms_of_use_chb()
     registration_page.click_on_register_button()
     registration_page.success_message_check()
-    time.sleep(2)

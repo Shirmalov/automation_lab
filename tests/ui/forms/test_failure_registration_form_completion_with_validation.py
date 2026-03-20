@@ -1,7 +1,7 @@
 import time
 import allure
 import pytest
-from pages.forms.registration_form_with_validation import RegistrationValidationPage
+from pages.forms.registration_validation_form import RegistrationValidationPage
 
 
 @pytest.mark.negative
