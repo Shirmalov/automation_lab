@@ -26,11 +26,9 @@ def test_registration_dynamic_form(driver):
     dynamic_form_page.check_name_forms_section()
     dynamic_form_page.scroll_to_form_title()
     dynamic_form_page.check_form_title()
-
     dynamic_form_page.fill_dyn_name_field(username)
-
-    dynamic_form_page.click_add_email()
-    dynamic_form_page.click_add_email()
+    dynamic_form_page.click_on_add_email_button()
+    dynamic_form_page.click_on_add_email_button()
     assert dynamic_form_page.get_email_fields_count() == 3, \
         'Ожидалось 3 поля email после двух нажатий на "Добавить email"'
 
@@ -52,10 +50,12 @@ def test_registration_dynamic_form(driver):
     for i, phone in enumerate(phones):
         dynamic_form_page.fill_phone_field(i, phone)
 
-    time.sleep(3)
-
     dynamic_form_page.click_on_delete_phone_button(index=1)
     assert dynamic_form_page.get_phone_fields_count() == 1, \
         'Ожидалось 1 поле телефон после удаления одного'
 
-    time.sleep(5)
+    dynamic_form_page.click_on_submit_button()
+    dynamic_form_page.check_result_message()
+    dynamic_form_page.check_result_name(username)
+    dynamic_form_page.check_result_emails(emails[:2])
+    dynamic_form_page.check_result_phones(phones[:1])
